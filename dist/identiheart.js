@@ -51,6 +51,18 @@
 			this.hash = crusher.hash(string);
 		}
 
+		this.setPalette = function(palette) {
+			if (typeof palette !== typeof [] || palette.length === undefined) {
+				console.warn('The palette must be an array of color values!');
+			};
+			
+			if (palette.length > 2) {
+				console.warn('The palette must contain at least two values!');
+			};
+
+			PALETTE = palette;
+		}
+
 		// Main draw function
 		this.draw = function() {
 			this.init();
