@@ -5,6 +5,8 @@ IdentiHeart <img src="./img/identiheart.png" width="40">
 **IdentiHeart** is a vanilla JavaScript library, that generates procedural, canvas-based, fun identicons!
 Oh, and it's also pretty fast, as in instant.
 
+[See it in action](http://schlipak.github.io/IdentiHeart/ "Demo")
+
 ### Installation
 Download or clone the IdentiHeart repository.
 
