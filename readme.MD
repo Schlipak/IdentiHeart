@@ -54,10 +54,11 @@ This will generate the following image, inside the `myCanvas` element.<br />
 ```
 Heart(canvas, context, [margin, scale])
 ```
-**canvas** *DOM Element*, The canvas in which to draw.<br/>
-**context** *CanvasRenderingContext2D*, the context of the canvas.<br/>
-**margin** *number*, margin to put around the drawing. Optional, default 5.<br/>
-**scale** *number*, pixel scale factor. Optional, default 20.
+
+* **canvas** *DOM Element*, The canvas in which to draw.<br/>
+* **context** *CanvasRenderingContext2D*, the context of the canvas.<br/>
+* **margin** *number*, margin to put around the drawing. Optional, default 5.<br/>
+* **scale** *number*, pixel scale factor. Optional, default 20.
 
 > Constructs a new Heart object attached to the given canvas. Margins and scale factor can be optionally set to tweak the output.
 
@@ -67,7 +68,7 @@ Heart(canvas, context, [margin, scale])
 setUsername(string)
 ```
 
-**string** *string*, the username or string to use to generate the IdentiHeart.
+* **string** *string*, the username or string to use to generate the IdentiHeart.
 
 > Sets the value of the username or string to use while generating the IdentiHeart. The string is hashed automatically.
 
@@ -77,7 +78,7 @@ setUsername(string)
 setPalette(array<string>)
 ```
 
-**array** *array&lt;string&gt;*, an array of color values
+* **array** *array&lt;string&gt;*, an array of color values
 
 > Replaces the default palette used by the generator to color the IdentiHeart. The array must contain at least two colors. Colors can be represented as hex, rgb or html name.
 
