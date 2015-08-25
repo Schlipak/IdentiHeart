@@ -40,6 +40,7 @@
 		}
 		input#username {
 			position: relative;
+			width: 300px;
 			padding: 0.5em 1em;
 			font-size: 14px;
 			font-family: sans-serif;
@@ -74,7 +75,7 @@
 <body>
 	<canvas height='500' id='identicon' width='500'></canvas>
 	<nav>
-		<input id='username' type='text' value='Schlipak'>
+		<input id='username' type='text' value='Schlipak' placeholder="Type your username or a string">
 		<div class='size-container'>
 			<label for='size'>Size</label>
 			<input id='size' max='30' min='1' step='1' type='range' value='15'>
