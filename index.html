@@ -104,6 +104,18 @@
 		.size-container>span {
 			margin-left: 1em;
 		}
+		a.test-link {
+			display: block;
+			position: absolute;
+			bottom: 5px;
+			right: 5px;
+			font-family: sans-serif;
+			color: white;
+			padding: 0.5em 1em;
+			font-size: 1em;
+			background-color: rgba(0,0,0,0.15);
+			cursor: pointer;
+		}
 	</style>
 </head>
 <body>
@@ -120,6 +132,8 @@
 			<span id='size-display'>15em</span>
 		</div>
 	</nav>
+
+	<a class="test-link" href="./test">Tests</a>
 
 	<script type="text/javascript">
 		var c = document.getElementById("identicon");
