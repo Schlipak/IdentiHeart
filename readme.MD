@@ -71,6 +71,16 @@ setUsername(string)
 
 > Sets the value of the username or string to use while generating the IdentiHeart. The string is hashed automatically.
 
+###### setPalette
+
+```
+setPalette(array<string>)
+```
+
+**array** *array&lt;string&gt;*, an array of color values
+
+> Replaces the default palette used by the generator to color the IdentiHeart. The array must contain at least two colors. Colors can be represented as hex, rgb or html name.
+
 ###### Init
 
 ```
