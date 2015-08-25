@@ -11,7 +11,7 @@
 	// Hash generator
 	var Crusher = function() {
 		this.hash = function(s) {
-			return s.split("").reduce(function(a, b) {
+			return String(s).split("").reduce(function(a, b) {
 				a = ((a << 5) - a) + b.charCodeAt(0);
 				return a & a
 			}, 0);
@@ -98,7 +98,9 @@
 
 			// Generate colors
 			this.primary = PALETTE[Math.abs(this.hash % PALETTE.length)];
-			this.accent = PALETTE[Math.abs((this.hash * this.hash % PALETTE.length) % PALETTE.length)];
+			var crusher = new Crusher();
+			var subHash = crusher.hash(this.hash);
+			this.accent = PALETTE[Math.abs(subHash % PALETTE.length)];
 
 			// Clear the canvas
 			ctx.globalCompositeOperation = "source-over";
