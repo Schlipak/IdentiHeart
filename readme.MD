@@ -15,7 +15,7 @@ git clone https://github.com/Schlipak/IdentiHeart.git
 ```
 
 You will get a folder, called `dist`, in which you can find the minified and unminified JavaScript source.
-Create an HTML document, include the script, and create a `canvas` element.
+Create an HTML document, include the script, and create a `canvas` element the size you want.
 
 ``` html
 <!DOCTYPE html>
