@@ -49,7 +49,7 @@ This will generate the following image, inside the `myCanvas` element.<br />
 <img src="./img/example.png" width="130">
 
 ### Methods
-###### Constructor
+##### Constructor
 
 ```
 Heart(canvas, context, [margin, scale])
@@ -61,7 +61,7 @@ Heart(canvas, context, [margin, scale])
 
 > Constructs a new Heart object attached to the given canvas. Margins and scale factor can be optionally set to tweak the output.
 
-###### setUsername
+##### setUsername
 
 ```
 setUsername(string)
@@ -71,7 +71,7 @@ setUsername(string)
 
 > Sets the value of the username or string to use while generating the IdentiHeart. The string is hashed automatically.
 
-###### setPalette
+##### setPalette
 
 ```
 setPalette(array<string>)
@@ -81,7 +81,7 @@ setPalette(array<string>)
 
 > Replaces the default palette used by the generator to color the IdentiHeart. The array must contain at least two colors. Colors can be represented as hex, rgb or html name.
 
-###### Init
+##### Init
 
 ```
 init()
@@ -89,7 +89,7 @@ init()
 
 > Initializes the Heart object and clears the canvas. Must be always called before drawing or refreshing the IdentiHeart.
 
-###### Draw
+##### Draw
 
 ```
 draw()
