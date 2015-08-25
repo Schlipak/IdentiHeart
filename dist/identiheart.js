@@ -7,7 +7,7 @@
  * on the user's username, hashed into a unique string
  * to number representation.
  */
-(function() {
+ (function() {
 	// Hash generator
 	var Crusher = function() {
 		this.hash = function(s) {
@@ -55,42 +55,42 @@
 		this.draw = function() {
 			this.init();
 
-				// Rotate the canvas -45deg
-				ctx.save();
-				ctx.translate(c.width/2, c.height/2);
-				ctx.rotate(- Math.PI / 4);
-				ctx.translate(-c.width/2, -c.height/2);
+			// Rotate the canvas -45deg
+			ctx.save();
+			ctx.translate(c.width/2, c.height/2);
+			ctx.rotate(- Math.PI / 4);
+			ctx.translate(-c.width/2, -c.height/2);
 
-				this.generateBlocks();
-				this.drawBlocks();
-				this.drawOutline();
+			this.generateBlocks();
+			this.drawBlocks();
+			this.drawOutline();
 
-				this.shape = new Shape(c, ctx, this.hash, this.primary, this.accent, {
-					x: (this.margin * this.scale) + 1.5 * this.cellSize,
-					y: (this.margin * this.scale) + 0.5 * this.cellSize
-				}, this.scale, this.cellSize);
-				this.shape.draw();
+			this.shape = new Shape(c, ctx, this.hash, this.primary, this.accent, {
+				x: (this.margin * this.scale) + 1.5 * this.cellSize,
+				y: (this.margin * this.scale) + 0.5 * this.cellSize
+			}, this.scale, this.cellSize);
+			this.shape.draw();
 
-				// Restore the original matrix
-				ctx.restore();
-			}
+			// Restore the original matrix
+			ctx.restore();
+		}
 
 		// Initializes a few parameters and clears the canvas
 		this.init = function() {
-				// Purge the block array
-				this.blocks = new Array();
-				// Purge the shape
-				this.shape = null;
+			// Purge the block array
+			this.blocks = new Array();
+			// Purge the shape
+			this.shape = null;
 
-				// Generate colors
-				this.primary = PALETTE[Math.abs(this.hash % PALETTE.length)];
-				this.accent = PALETTE[Math.abs((this.hash * this.hash % PALETTE.length) % PALETTE.length)];
+			// Generate colors
+			this.primary = PALETTE[Math.abs(this.hash % PALETTE.length)];
+			this.accent = PALETTE[Math.abs((this.hash * this.hash % PALETTE.length) % PALETTE.length)];
 
-				// Clear the canvas
-				ctx.globalCompositeOperation = "source-over";
-				ctx.clearRect(0, 0, c.width, c.height);
-				ctx.globalCompositeOperation = "multiply";
-			}
+			// Clear the canvas
+			ctx.globalCompositeOperation = "source-over";
+			ctx.clearRect(0, 0, c.width, c.height);
+			ctx.globalCompositeOperation = "multiply";
+		}
 
 		// Applies an offset to the drawing to visually center it
 		this.offset = function() {
@@ -107,33 +107,33 @@
 		this.drawOutline = function() {
 			this.offset();
 
-				// Outer lines
-				ctx.beginPath();
-				ctx.moveTo(this.margin * this.scale, this.margin * this.scale);
-				ctx.lineTo(this.margin * this.scale, c.height - (this.margin * this.scale));
-				ctx.lineTo(c.width - (this.margin * this.scale), c.height - (this.margin * this.scale));
-				ctx.lineTo(c.width - (this.margin * this.scale), c.height / 2);
-				ctx.lineTo(c.width / 2, c.height / 2);
-				ctx.lineTo(c.width / 2, this.margin * this.scale);
-				ctx.closePath();
+			// Outer lines
+			ctx.beginPath();
+			ctx.moveTo(this.margin * this.scale, this.margin * this.scale);
+			ctx.lineTo(this.margin * this.scale, c.height - (this.margin * this.scale));
+			ctx.lineTo(c.width - (this.margin * this.scale), c.height - (this.margin * this.scale));
+			ctx.lineTo(c.width - (this.margin * this.scale), c.height / 2);
+			ctx.lineTo(c.width / 2, c.height / 2);
+			ctx.lineTo(c.width / 2, this.margin * this.scale);
+			ctx.closePath();
 
-				ctx.strokeStyle = 'black';
-				ctx.lineWidth = this.scale * (500 / c.width);
-				ctx.lineJoin = "round";
-				ctx.lineCap = "round";
-				ctx.stroke();
+			ctx.strokeStyle = 'black';
+			ctx.lineWidth = this.scale * (500 / c.width);
+			ctx.lineJoin = "round";
+			ctx.lineCap = "round";
+			ctx.stroke();
 
-				// Inner lines
-				ctx.beginPath();
-				ctx.moveTo(c.width / 2, c.height / 2);
-				ctx.lineTo(this.margin * this.scale, c.height / 2);
-				ctx.moveTo(c.width / 2, c.height / 2);
-				ctx.lineTo(c.width / 2, c.height - (this.margin * this.scale));
+			// Inner lines
+			ctx.beginPath();
+			ctx.moveTo(c.width / 2, c.height / 2);
+			ctx.lineTo(this.margin * this.scale, c.height / 2);
+			ctx.moveTo(c.width / 2, c.height / 2);
+			ctx.lineTo(c.width / 2, c.height - (this.margin * this.scale));
 
-				ctx.stroke();
+			ctx.stroke();
 
-				this.resetOffset();
-			}
+			this.resetOffset();
+		}
 
 		// Generates blocks
 		this.generateBlocks = function() {
@@ -245,32 +245,32 @@
 					ctx.lineTo(this.pos.x + this.cellSize, this.pos.y);
 					ctx.lineTo(this.pos.x + this.cellSize, this.pos.y + this.cellSize);
 					ctx.closePath();
-					break;
-					case 1:
+				break;
+				case 1:
 					// right
 					ctx.beginPath();
 					ctx.moveTo(this.pos.x + this.cellSize, this.pos.y);
 					ctx.lineTo(this.pos.x + this.cellSize, this.pos.y + this.cellSize);
 					ctx.lineTo(this.pos.x, this.pos.y + this.cellSize);
 					ctx.closePath();
-					break;
-					case 2:
+				break;
+				case 2:
 					// bottom
 					ctx.beginPath();
 					ctx.moveTo(this.pos.x, this.pos.y);
 					ctx.lineTo(this.pos.x, this.pos.y + this.cellSize);
 					ctx.lineTo(this.pos.x + this.cellSize, this.pos.y + this.cellSize);
 					ctx.closePath();
-					break;
-					case 3:
+				break;
+				case 3:
 					// left
 					ctx.beginPath();
 					ctx.moveTo(this.pos.x, this.pos.y);
 					ctx.lineTo(this.pos.x + this.cellSize, this.pos.y);
 					ctx.lineTo(this.pos.x, this.pos.y + this.cellSize);
 					ctx.closePath();
-					break;
-					default:
+				break;
+				default:
 					// top
 					ctx.beginPath();
 					ctx.moveTo(this.pos.x, this.pos.y);
@@ -292,7 +292,7 @@
 				this.makePath(this.hash, this.hash % 5);
 				ctx.fillStyle = this.accent;
 				ctx.fill();
-			} else if(this.type === BlockType.TWO) {
+			} else if (this.type === BlockType.TWO) {
 				this.makePath(this.hash, this.hash % 4);
 				ctx.fillStyle = this.accent;
 				ctx.fill();
@@ -346,8 +346,8 @@
 					ctx.lineTo(this.pos.x + (this.cellSize / 2), this.pos.y - (this.cellSize / 2));
 					ctx.lineTo(this.pos.x, this.pos.y - (this.cellSize / 2));
 					ctx.closePath();
-					break;
-					case 1:
+				break;
+				case 1:
 					//circle
 					ctx.beginPath();
 					ctx.arc(
@@ -357,25 +357,25 @@
 						0,
 						Math.PI * 2,
 						true
-						);
-					break;
-					case 2:
+					);
+				break;
+				case 2:
 					// triangle
 					ctx.beginPath();
 					ctx.moveTo(this.pos.x, this.pos.y);
 					ctx.lineTo(this.pos.x + (this.cellSize * 0.65), this.pos.y);
 					ctx.lineTo(this.pos.x, this.pos.y - (this.cellSize * 0.65));
 					ctx.closePath();
-					break;
-					case 3:
+				break;
+				case 3:
 					// oval
 					ctx.beginPath();
 					ctx.moveTo(this.pos.x - (this.cellSize * 0.2), this.pos.y + (this.cellSize * 0.2));
 					ctx.quadraticCurveTo(this.pos.x + (this.cellSize * 0.4), this.pos.y, this.pos.x + (this.cellSize * 0.5), this.pos.y - (this.cellSize * 0.5));
 					ctx.moveTo(this.pos.x + (this.cellSize * 0.5), this.pos.y - (this.cellSize * 0.5));
 					ctx.quadraticCurveTo(this.pos.x , this.pos.y - (this.cellSize * 0.4), this.pos.x - (this.cellSize * 0.2), this.pos.y + (this.cellSize * 0.2));
-					break;
-					default:
+				break;
+				default:
 					//square
 					ctx.beginPath();
 					ctx.moveTo(this.pos.x, this.pos.y);
