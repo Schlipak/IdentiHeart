@@ -23,10 +23,44 @@
 			box-sizing: border-box;
 		}
 		canvas {
+			position: relative;
 			width: 15em;
 			border-radius: 50%;
 			transition: width 0.3s, height 0.3s;
 			background-color: #fff;
+		}
+		.canvas-overlay {
+			position: absolute;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			top: 50%;
+			left: 50%;
+			width: 15em;
+			height: 15em;
+			border-radius: 50%;
+			background-color: rgba(0,0,0,.5);
+			cursor: pointer;
+			text-align: center;
+			opacity: 0;
+			transition: opacity 0.4s, width 0.2s, height 0.2s;
+
+			-moz-transform: translateX(-50%) translateY(-50%);
+			-webkit-transform: translateX(-50%) translateY(-50%);
+			-o-transform: translateX(-50%) translateY(-50%);
+			-ms-transform: translateX(-50%) translateY(-50%);
+			transform: translateX(-50%) translateY(-50%);
+		}
+		.canvas-overlay:hover {
+			opacity: 1;
+			transition: opacity 0.4s, width 0.2s, height 0.2s;
+		}
+		.canvas-overlay>span {
+			font-family: sans-serif;
+			color: white;
+			font-size: 1.2em;
+			text-shadow: 0 0 5px black;
+			cursor: pointer;
 		}
 		nav {
 			position: absolute;
@@ -74,10 +108,14 @@
 </head>
 <body>
 	<canvas height='500' id='identicon' width='500'></canvas>
+	<div class="canvas-overlay" id="download">
+		<span>Download image</span>
+	</div>
+
 	<nav>
 		<input id='username' type='text' value='Schlipak' placeholder="Type your username or a string">
 		<div class='size-container'>
-			<label for='size'>Size</label>
+			<label for='size'>Scale</label>
 			<input id='size' max='30' min='1' step='1' type='range' value='15'>
 			<span id='size-display'>15em</span>
 		</div>
@@ -88,6 +126,7 @@
 		var ctx = c.getContext("2d");
 
 		var uInput = document.getElementById("username");
+		var d = document.getElementById('download');
 
 		var username = uInput.value;
 
@@ -107,9 +146,20 @@
 		sizeInput.onchange = function(e) {
 			var val = e.target.value;
 			c.style.width = val + 'em';
+
+			d.style.width = val + 'em';
+			d.style.height = val + 'em';
+
 			document.getElementById('size-display').innerHTML = val + 'em';
+
 			h.init();
 			h.draw();
+		}
+
+		d.onclick = function() {
+			var d = c.toDataURL("image/png");
+			var w = window.open('about:blank','_blank');
+			w.document.write("<img src='"+d+"' alt='"+username+"' title='"+username+"'/>");
 		}
 	</script>
 </body>
