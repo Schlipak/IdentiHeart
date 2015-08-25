@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>IdentiHeart Tests</title>
+	<link rel="stylesheet" href="//code.jquery.com/qunit/qunit-1.18.0.css">
+	<script type="text/javascript" src="../dist/identiheart.js"></script>
+	<style type="text/css">
+		canvas {
+			display: none;
+		}
+
+		.color-container {
+			display: flex;
+			justify-content: space-around;
+			align-content: center;
+			position: relative;
+			flex-wrap: wrap;
+			margin-top: 10px;
+		}
+
+		.colors {
+			position: relative;
+			display: flex;
+			justify-content: space-around;
+			align-content: center;
+			margin: 5px;
+			overflow: hidden;
+			border-radius: 3px;
+		}
+
+		.color {
+			position: relative;
+			display: inline-block;
+			width: 50px;
+			height: 50px;
+		}
+	</style>
+</head>
+<body>
+	<div id="qunit"></div>
+	<div id="qunit-fixture"></div>
+
+	<canvas id="myCanvas"></canvas>
+	<div class="color-container" id="colors-results"></div>
+
+	<script src="//code.jquery.com/qunit/qunit-1.18.0.js"></script>
+	<script type="text/javascript">
+		var c = document.getElementById('myCanvas');
+		var ctx = c.getContext('2d');
+
+		var container = document.getElementById('colors-results');
+
+		// check if an element exists in array using a comparer function
+		// comparer : function(currentElement)
+		Array.prototype.inArray = function(comparer) { 
+			for(var i=0; i < this.length; i++) { 
+				if(comparer(this[i])) return true; 
+			}
+			return false; 
+		}; 
+
+		// adds an element to the array if it does not already exist using a comparer 
+		// function
+		Array.prototype.pushIfNotExist = function(element, comparer) { 
+			if (!this.inArray(comparer)) {
+				this.push(element);
+			}
+		}; 
+
+		QUnit.test('Palette usage', function(assert) {
+			var h = new Heart(c, ctx);
+			var palette = [
+				'#F44336', '#E91E63', '#9C27B0', '#673AB7', '#3F51B5', '#2196F3',
+				'#03A9F4', '#00BCD4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39',
+				'#FFEB3B', '#FFC107', '#FF9800', '#FF5722', '#795548', '#607D8B'
+			];
+			var generatedPalette = [];
+			var generatedCombinaisons = [];
+
+			for(var i = 0; i < 100000; i++) {				
+				h.setUsername(String(i));
+				h.init();
+				
+				generatedPalette.pushIfNotExist(h.primary, function(e) {
+					return e === h.primary;
+				});
+
+				generatedPalette.pushIfNotExist(h.accent, function(e) {
+					return e === h.accent;
+				});
+
+				generatedCombinaisons.pushIfNotExist({
+					primary: h.primary,
+					accent: h.accent
+				}, function(e) {
+					return e.primary === h.primary && e.accent === h.accent;
+				});
+			};
+
+			for(var i = 0; i < generatedCombinaisons.length; i++) {
+				var primary = generatedCombinaisons[i].primary;
+				var accent = generatedCombinaisons[i].accent;
+
+				var group = document.createElement('DIV');
+				group.className += " colors";
+				var c1 = document.createElement('DIV');
+				c1.className += " color";
+				c1.style.backgroundColor = primary;
+				var c2 = document.createElement('DIV')
+				c2.className += " color";
+				c2.style.backgroundColor = accent;
+				group.appendChild(c1);
+				group.appendChild(c2);
+				container.appendChild(group);
+			}
+
+			console.log(generatedCombinaisons.length);
+			assert.equal(generatedPalette.length, palette.length, "All the palette is used");
+			assert.equal(generatedCombinaisons.length, Math.pow(palette.length, 2), "All combinaisons are used");
+		});
+	</script>
+</body>
+</html>
