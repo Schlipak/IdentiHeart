@@ -75,10 +75,10 @@ setUsername(string)
 ##### setPalette
 
 ```
-setPalette(array<string>)
+setPalette(palette)
 ```
 
-* **array** *array&lt;string&gt;*, an array of color values
+* **palette** *array&lt;string&gt;*, an array of color values
 
 > Replaces the default palette used by the generator to color the IdentiHeart. The array must contain at least two colors. Colors can be represented as hex, rgb or html name.
 
