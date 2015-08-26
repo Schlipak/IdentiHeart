@@ -146,7 +146,7 @@ Example: The IdentiHeart for the string `Composite`, rendered with the default c
 
 ---
 
-##### Init
+##### init
 
 ```
 init()
@@ -156,7 +156,7 @@ init()
 
 ---
 
-##### Draw
+##### draw
 
 ```
 draw()
