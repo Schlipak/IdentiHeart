@@ -98,7 +98,7 @@ setHasStroke(b)
 
 > Sets if the icon should be draw with a stroke. Optional, default `true`.
 
-Example:<br>
+Example: `setHasStroke(false);`<br>
 <img src="./img/nostroke.png" width="60">
 
 ---
@@ -112,6 +112,9 @@ setStrokeWeight(weight)
 * **weight** *number*, the weight factor of the stroke
 
 > Sets the weight of the stroke. The value does not represent the final pixel size of the stroke but is merely a multiplication factor. Optional, default `500`.
+
+Example: `setStrokeWeight(200);`<br>
+<img src="./img/strokeweight.png" width="60">
 
 ---
 
@@ -132,6 +135,10 @@ setCompositeOperation(operation)
 'color-burn', 'hard-light', 'soft-light', 'difference', 'exclusion', 'hue',
 'saturation', 'color', 'luminosity'
 ```
+
+Example: The IdentiHeart for the string `Composite`, rendered with the default composite operation and with `color-burn`.<br>
+<img src="./img/composite-default.png" width="60">
+<img src="./img/composite-colorburn.png" width="60">
 
 **Note**: Some of the composite operations are not implemented in all browsers. The default `multiply` operation, for example, does not work as of today in IE/Edge. This will result in IdentiHearts rendering differently depending on the user's browser.
 
