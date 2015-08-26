@@ -82,7 +82,7 @@
 		 * @private
 		 * @type {Number}
 		 */
-		this.cellSize = c.width - (this.margin * this.scale)  - c.width / 2;
+		this.cellSize = (c.width / 2) - (this.margin * this.scale);
 		
 		/**
 		 * The hashed username / input string
