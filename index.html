@@ -78,8 +78,8 @@
 			padding: 0.5em 1em;
 			font-size: 14px;
 			font-family: sans-serif;
-			border: 1px solid rgba(0,0,0,0.8);
-			border-radius: 3px;
+			border: none;
+			border-radius: 3px 3px 0 0;
 			outline: none;
 		}
 		.size-container {
@@ -110,11 +110,53 @@
 			bottom: 5px;
 			right: 5px;
 			font-family: sans-serif;
+			text-decoration: none;
 			color: white;
 			padding: 0.5em 1em;
 			font-size: 1em;
 			background-color: rgba(0,0,0,0.15);
 			cursor: pointer;
+		}
+		.username-container {
+			position: relative;
+		}
+		.controls {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			align-content: center;
+			position: absolute;
+			top: 100%;
+			left: 0;
+			width: 100%;
+			padding: 0em;
+			background-color: rgba(0,0,0,0.15);
+			border-radius: 0 0 3px 3px;
+		}
+		.controls>label {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			flex-wrap: nowrap;
+			position: relative;
+			width: 100%;
+			font-size: 1em;
+			padding: 0.5em;
+			color: white;
+			font-family: Geneva, Tahoma, Verdana, sans-serif;
+		}
+		.controls>label:not(:first-child) {
+			border-top: 1px solid rgba(255,255,255,.1);
+		}
+		.sub-input {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+		.sub-input>span {
+			margin-left: 5px;
+			line-height: 100%;
 		}
 	</style>
 </head>
@@ -125,7 +167,53 @@
 	</div>
 
 	<nav>
-		<input id='username' type='text' value='Schlipak' placeholder="Type your username or a string">
+		<div class="username-container">
+			<input id='username' type='text' value='Schlipak' placeholder="Type your username or a string">
+			<div class="controls">
+				<label for="hasStroke">
+					Stroke
+					<input type="checkbox" id="hasStroke" checked="true">
+				</label>
+				<label for="strokeWeight">
+					Stroke weight
+					<div class="sub-input">
+						<input type="range" id="strokeWeight" max="1000" min="0" step="10" value="500">
+						<span id="strokeWeight-display">500</span>
+					</div>
+				</label>
+				<label for="compositeOperation">
+					Composite operation
+					<select name="compositeOperation" id="compositeOperation">
+						<option value="source-over">source-over</option>
+						<option value="source-in">source-in</option>
+						<option value="source-out">source-out</option>
+						<option value="source-atop">source-atop</option>
+						<option value="destination-over">destination-over</option>
+						<option value="destination-in">destination-in</option>
+						<option value="destination-out">destination-out</option>
+						<option value="destination-atop">destination-atop</option>
+						<option value="lighter">lighter</option>
+						<option value="copy">copy</option>
+						<option value="xor">xor</option>
+						<option value="multiply" selected="selected">multiply</option>
+						<option value="screen">screen</option>
+						<option value="overlay">overlay</option>
+						<option value="darken">darken</option>
+						<option value="lighten">lighten</option>
+						<option value="color-dodge">color-dodge</option>
+						<option value="color-burn">color-burn</option>
+						<option value="hard-light">hard-light</option>
+						<option value="soft-light">soft-light</option>
+						<option value="difference">difference</option>
+						<option value="exclusion">exclusion</option>
+						<option value="hue">hue</option>
+						<option value="saturation">saturation</option>
+						<option value="color">color</option>
+						<option value="luminosity">luminosity</option>
+					</select>
+				</label>
+			</div>
+		</div>
 		<div class='size-container'>
 			<label for='size'>Scale</label>
 			<input id='size' max='30' min='2' step='1' type='range' value='15'>
@@ -139,21 +227,56 @@
 		var c = document.getElementById("identicon");
 		var ctx = c.getContext("2d");
 
-		var uInput = document.getElementById("username");
 		var d = document.getElementById('download');
+		var uInput = document.getElementById("username");
+		var hasStrokeInput = document.getElementById('hasStroke');
+		var strokeWeightInput = document.getElementById('strokeWeight');
+		var compositeOperationInput = document.getElementById('compositeOperation');
 
-		var username = uInput.value;
+		var username, hasStroke, strokeWeight, compositeOperation;
 
 		var h = new Heart(c, ctx);
-		h.setUsername(username);
-		h.init();
-		h.draw();
+		refreshValues();
+		redraw();
+
+		function refreshValues() {
+			username = uInput.value;
+			hasStroke = hasStrokeInput.checked;
+			strokeWeight = Number(strokeWeightInput.value);
+			compositeOperation = compositeOperationInput.options[compositeOperationInput.selectedIndex].value;
+		}
+
+		function redraw() {
+			h.setUsername(username);
+			h.setHasStroke(hasStroke);
+			h.setStrokeWeight(strokeWeight);
+			h.setCompositeOperation(compositeOperation);
+
+			h.init();
+			h.draw();	
+		}
 
 		uInput.oninput = function() {
-			username = uInput.value;
-			h.setUsername(username);
-			h.init();
-			h.draw();
+			refreshValues();
+			redraw();
+		}
+
+		hasStrokeInput.onchange = function() {
+			refreshValues();
+			redraw();
+		}
+
+		strokeWeightInput.onchange = function(e) {
+			val = e.target.value;
+			document.getElementById('strokeWeight-display').innerHTML = val;
+
+			refreshValues();
+			redraw();
+		}
+
+		compositeOperationInput.onchange = function() {
+			refreshValues();
+			redraw();
 		}
 
 		var sizeInput = document.getElementById('size');
