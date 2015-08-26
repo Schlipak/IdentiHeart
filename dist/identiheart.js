@@ -1,15 +1,22 @@
-/*
- * === IdentiHeart ===
- * Author: Schlipak
- * 
- * This library generates a canvas-based procedural
- * default profile picture. The generation is based
- * on the user's username, hashed into a unique string
- * to number representation.
+/**
+ * @name IdentiHeart
+ * @author Schlipak
+ * @copyright Apache license 2015 Guillaume de Matos
  */
  (function() {
-	// Hash generator
+	/**
+	 * @class Crusher
+	 * @private
+	 * @constructor
+	 * @this {Crusher}
+	 */
 	var Crusher = function() {
+		/**
+		 * Hashes the given string
+		 * @public
+		 * @param  {String} s The string to hash
+		 * @return {Number} The hash
+		 */
 		this.hash = function(s) {
 			return String(s).split("").reduce(function(a, b) {
 				a = ((a << 5) - a) + b.charCodeAt(0);
@@ -18,54 +25,210 @@
 		}
 	}
 
-	// ========================================= //
-	// Class Heart
+	/**
+	 * @class Heart
+	 * @public
+	 * @constructor
+	 * @this {Heart}
+	 * @param {DOM Element} c The canvas onto which the IdentiHeart is drawn
+	 * @param {CanvasRenderingContext2D} ctx The 2D context of the canvas
+	 * @param {Number} margin The margin to draw around the icon. Optional, default 5
+	 * @param {Number} scale The scale factor of the drawing. Optional, default 20
+	 */
 	Heart = function(c, ctx, margin, scale) {
-		// Color palette
+		/**
+		 * The color palette used by the renderer to draw the icon
+		 * @private
+		 * @type {Array<String>}
+		 */
 		var PALETTE = [
-		'#F44336', '#E91E63', '#9C27B0', '#673AB7', '#3F51B5', '#2196F3',
-		'#03A9F4', '#00BCD4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39',
-		'#FFEB3B', '#FFC107', '#FF9800', '#FF5722', '#795548', '#607D8B'
+			'#F44336', '#E91E63', '#9C27B0', '#673AB7', '#3F51B5', '#2196F3',
+			'#03A9F4', '#00BCD4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39',
+			'#FFEB3B', '#FFC107', '#FF9800', '#FF5722', '#795548', '#607D8B'
 		];
 
-		// Generated colors
+		/**
+		 * The primary color
+		 * @private
+		 * @type {String}
+		 */
 		this.primary;
+
+		/**
+		 * The accent color
+		 * @private
+		 * @type {String}
+		 */
 		this.accent;
 
-		// Drawing margin
+		/**
+		 * The margin to put around the drawing
+		 * @private
+		 * @type {Number}
+		 * @default 5
+		 */
 		this.margin = margin || 5;
-		// Drawing scale
+
+		/**
+		 * The scale factor of the drawing
+		 * @private
+		 * @type {Number}
+		 * @default 20
+		 */
 		this.scale = scale || 20;
-		// Computed cell size
+
+		/**
+		 * The computed cell size
+		 * @private
+		 * @type {Number}
+		 */
 		this.cellSize = c.width - (this.margin * this.scale)  - c.width / 2;
-		// Hashed username
+		
+		/**
+		 * The hashed username / input string
+		 * @private
+		 * @type {Number}
+		 */
 		this.hash;
-		// Generated blocks
+
+		/**
+		 * The generated blocks
+		 * @private
+		 * @type {Array<Block>}
+		 */
 		this.blocks;
-		// Generated shape
+		
+		/**
+		 * The generated shape
+		 * @private
+		 * @type {Shape}
+		 */
 		this.shape;
 
-		// Hash setter
+		/**
+		 * Makes the drawing stroked or not
+		 * @private
+		 * @type {Boolean}
+		 */
+		this.hasStroke = true;
+		
+		/**
+		 * The stroke weight
+		 * @private
+		 * @type {Number}
+		 * @default 500
+		 */
+		this.strokeWeight = 500;
+
+		/**
+		 * The composite operation used by the renderer
+		 * @private
+		 * @type {String}
+		 * @default 'multiply'
+		 */
+		this.compositeOperation = 'multiply';
+
+		/**
+		 * Sets the username or string to generate the drawing from
+		 * @public
+		 * @param {String}
+		 */
 		this.setUsername = function(string) {
 			var crusher = new Crusher();
 			this.hash = crusher.hash(string);
 		}
 
+		/**
+		 * Sets the palette used by the renderer
+		 * @public
+		 * @param {Array<String>}
+		 * @optional
+		 * @returns {mixed} false on failure
+		 */
 		this.setPalette = function(palette) {
 			if (typeof palette !== typeof [] || palette.length === undefined) {
-				console.warn('The palette must be an array of color values!');
+				console.warn('The palette must be an array of color values.');
 				return false;
 			};
 			
 			if (palette.length < 2) {
-				console.warn('The palette must contain at least two values!');
+				console.warn('The palette must contain at least two values.');
 				return false;
 			};
 
 			PALETTE = palette;
 		}
 
-		// Main draw function
+		/**
+		 * Sets if the drawing should be stroked
+		 * @public
+		 * @param {Boolean} b The state of the stroke
+		 * @optional
+		 * @default true
+		 * @returns {mixed} false on failure
+		 */
+		this.setHasStroke = function(b) {
+			if (typeof b !== 'boolean') {
+				console.warn('The parameter for the function Heart.setHasStroke() must be a boolean.');
+				return false;
+			};
+
+			this.hasStroke = b;
+		}
+
+		/**
+		 * Sets the stroke weight of the drawing<br>
+		 * The value does not correspond to the final pixel size, 
+		 * but is merely a multiplicative factor
+		 * @public
+		 * @param {Number} weight The weight factor of the stroke
+		 * @optional
+		 * @default 500
+		 * @returns {mixed} false on failure
+		 */
+		this.setStrokeWeight = function(weight) {
+			if (typeof weight !== 'number') {
+				console.warn('The parameter for the function Heart.setStrokeWeight() must be a number.');
+				return false;
+			};
+
+			this.strokeWeight = weight;
+		}
+
+		/**
+		 * Sets the composite operation used by the renderer
+		 * @public
+		 * @param {String} operation The composite operation
+		 * @optional
+		 * @default 'multiply'
+		 * @returns {mixed} false on failure
+		 */
+		this.setCompositeOperation = function(operation) {
+			var validOperations = [
+				'source-over', 'source-in', 'source-out', 'source-atop', 'destination-over',
+				'destination-in', 'destination-out', 'destination-atop', 'lighter', 'copy',
+				'xor', 'multiply', 'screen', 'overlay', 'darken', 'lighten', 'color-dodge',
+				'color-burn', 'hard-light', 'soft-light', 'difference', 'exclusion', 'hue',
+				'saturation', 'color', 'luminosity'
+			];
+
+			operation = operation.toLowerCase();
+			if (validOperations.indexOf(operation) === -1) {
+				console.warn('The provided composite operation "'+operation+'" does not exist.');
+				return false;
+			};
+
+			this.compositeOperation = operation;
+		}
+
+		/**
+		 * The main drawing function<br>
+		 * Renders the IdentiHeart onto the canvas<br>
+		 * init() must be manually called before each render
+		 * @public
+		 * @see Heart.init()
+		 * @required
+		 */
 		this.draw = function() {
 			this.init();
 
@@ -77,19 +240,28 @@
 
 			this.generateBlocks();
 			this.drawBlocks();
-			this.drawOutline();
+
+			if (this.hasStroke) {
+				this.drawOutline();
+			};
 
 			this.shape = new Shape(c, ctx, this.hash, this.primary, this.accent, {
 				x: (this.margin * this.scale) + 1.5 * this.cellSize,
 				y: (this.margin * this.scale) + 0.5 * this.cellSize
 			}, this.scale, this.cellSize);
-			this.shape.draw();
+			this.shape.draw(this.hasStroke, this.strokeWeight);
 
 			// Restore the original matrix
 			ctx.restore();
 		}
 
-		// Initializes a few parameters and clears the canvas
+		/**
+		 * Initializes the IdentiHeart and clears the canvas<br>
+		 * Must be called before draw()
+		 * @public
+		 * @see Heart.draw()
+		 * @required
+		 */
 		this.init = function() {
 			// Purge the block array
 			this.blocks = new Array();
@@ -105,21 +277,30 @@
 			// Clear the canvas
 			ctx.globalCompositeOperation = "source-over";
 			ctx.clearRect(0, 0, c.width, c.height);
-			ctx.globalCompositeOperation = "multiply";
+			ctx.globalCompositeOperation = this.compositeOperation;
 		}
 
-		// Applies an offset to the drawing to visually center it
+		/**
+		 * Applies an offset to the canvas
+		 * @private
+		 */
 		this.offset = function() {
 			ctx.save();
 			ctx.translate(0.6 * this.scale, - 0.6 * this.scale);
 		}
 
-		// Resets the offset
+		/**
+		 * Resets the offset
+		 * @private
+		 */
 		this.resetOffset = function() {
 			ctx.restore();
 		}
 
-		// Draws the heart outline
+		/**
+		 * Draws the IdentiHeart outline
+		 * @private
+		 */
 		this.drawOutline = function() {
 			this.offset();
 
@@ -134,7 +315,7 @@
 			ctx.closePath();
 
 			ctx.strokeStyle = 'black';
-			ctx.lineWidth = this.scale * (500 / c.width);
+			ctx.lineWidth = this.scale * (this.strokeWeight / c.width);
 			ctx.lineJoin = "round";
 			ctx.lineCap = "round";
 			ctx.stroke();
@@ -151,7 +332,10 @@
 			this.resetOffset();
 		}
 
-		// Generates blocks
+		/**
+		 * Generates the blocks of this Heart
+		 * @private
+		 */
 		this.generateBlocks = function() {
 			var b1 = new Block(c, ctx, BlockType.ONE, this.primary, this.accent);
 			b1.setHash(this.hash);
@@ -181,7 +365,10 @@
 			this.blocks.push(b3);
 		}
 
-		// Draws the generated blocks
+		/**
+		 * Draws the generated blocks
+		 * @private
+		 */
 		this.drawBlocks = function() {
 			if (this.blocks.length == 0) {
 				return false;
@@ -193,63 +380,161 @@
 		}
 	};
 
-	// Block type enum
+	/**
+	 * @class BlockType
+	 * @enum {Number}
+	 */
 	var BlockType = new function() {
 		this.ONE = 1;
 		this.TWO = 2;
 		this.THREE = 3;
 	};
 
-	// Block class
+	/**
+	 * @class Block
+	 * @private
+	 * @this {Block}
+	 * @constructor
+	 * @param {DOM Element} c The canvas
+	 * @param {CanvasRenderingContext2D} ctx The 2D context of the canvas
+	 * @param {BlockType} type The type of block to generate
+	 * @param {String} primary The primary color
+	 * @param {String} accent The accent color
+	 */
 	var Block = function(c, ctx, type, primary, accent) {
-		// Type of block
+		/**
+		 * The type of block to generate
+		 * @private
+		 * @type {BlockType}
+		 */
 		this.type = type;
-		// Primary color
+
+		/**
+		 * The primary color
+		 * @private
+		 * @type {String}
+		 */
 		this.primary = primary;
-		// Accent color
+		
+		/**
+		 * The accent color
+		 * @private
+		 * @type {String}
+		 */
 		this.accent = accent;
 
-		// Computed cell size
+		/**
+		 * The computed cell size
+		 * @private
+		 * @type {Number}
+		 */
 		this.cellSize;
-		// Drawing margin
+		
+		/**
+		 * The margin to put around the drawing
+		 * @private
+		 * @type {Number}
+		 */
 		this.margin;
-		// Drawing scale
+
+		/**
+		 * The drawing scale factor
+		 * @private
+		 * @type {Number}
+		 */
 		this.scale;
-		// Block position object
+
+		/**
+		 * The position of the block
+		 * @private
+		 * @type {Object}
+		 */
 		this.pos;
 
-		// Hashed username
+		/**
+		 * The hashed username
+		 * @private
+		 * @type {Number}
+		 */
 		this.hash;
 
-		// Hash setter
+		/**
+		 * Sets the hash to use to generate the block
+		 * @public
+		 * @required
+		 * @param {Number} hash The hash
+		 * @returns {mixed} false on failure
+		 */
 		this.setHash = function(hash) {
+			if (typeof hash !== 'number') {
+				console.warn('The provided hash must be a number.');
+				return false;
+			};
+
 			this.hash = hash;
 		}
 
-		// Position setter
+		/**
+		 * Sets the position of the block
+		 * @public
+		 * @required
+		 * @param {Object} pos The position object
+		 * @returns {mixed} false on failure
+		 */
 		this.setPos = function(pos) {
+			if (typeof pos !== 'object') {
+				console.warn('The position must be an object.');
+				return false;
+			};
+
 			this.pos = pos;
 		}
 
-		// Sizing setter
+		/**
+		 * Sets various sizing factors
+		 * @public
+		 * @optional
+		 * @param {Number} cell The cell size
+		 * @param {Number} marg The margin
+		 * @param {Number} sc The scale factor
+		 * @returns {mixed} false on failure
+		 */
 		this.setSizing = function(cell, marg, sc) {
+			if (typeof cell !== 'number' ||
+				typeof marg !== 'number' ||
+				typeof sc !== 'number') {
+				console.warn('Sizing parameters must be numbers.');
+				return false;
+			};
+
 			this.cellSize = cell;
 			this.margin = marg;
 			this.scale = sc;
 		}
 
-		// Applies an offset to the drawing
+		/**
+		 * Applies an offset to the drawing
+		 * @private
+		 */
 		this.offset = function() {
 			ctx.save();
 			ctx.translate(0.6 * this.scale, -0.6 * this.scale);
 		}
 
-		// Resets the offset
+		/**
+		 * Resets the offset
+		 * @private
+		 */
 		this.resetOffset = function() {
 			ctx.restore();
 		}
 		
-		// Generates a path to draw in the block
+		/**
+		 * Generates a path to draw in the block
+		 * @private
+		 * @param {Number} hash The hash
+		 * @param {Number} offset An offset to apply to the procedural generation
+		 */
 		this.makePath = function(hash, offset) {
 			var mod = Math.abs(hash + offset) % 4;
 			
@@ -293,10 +578,13 @@
 					ctx.lineTo(this.pos.x + this.cellSize, this.pos.y);
 					ctx.lineTo(this.pos.x, this.pos.y + this.cellSize);
 					ctx.closePath();
-				}
 			}
+		}
 
-		// Main draw function
+		/**
+		 * Draws the block
+		 * @public
+		 */
 		this.draw = function() {
 			this.offset();
 
@@ -330,26 +618,77 @@
 		}
 	};
 
-	// Shape class
+	/**
+	 * @class Shape
+	 * @private
+	 * @constructor
+	 * @this {Shape}
+	 * @param {DOM Element} c The canvas
+	 * @param {CanvasRenderingContext2D} ctx The 2D context of the canvas
+	 * @param {Number} hash The hash used for the generation
+	 * @param {String} primary The primary color
+	 * @param {String} accent The accent color
+	 * @param {Object} pos The position of the shape
+	 * @param {Number} scale The scale factor of the drawing
+	 * @param {Number} cellSize The computed cell size
+	 */
 	var Shape = function(c, ctx, hash, primary, accent, pos, scale, cellSize) {
-		// Hashed username
+		/**
+		 * The hashed username / string to use to generate the shape
+		 * @private
+		 * @type {Number}
+		 */
 		this.hash = hash;
-		//Primary color
+		
+		/**
+		 * The primary color
+		 * @private
+		 * @type {String}
+		 */
 		this.primary = primary;
-		// Accent color
+		
+		/**
+		 * The accent color
+		 * @private
+		 * @type {String}
+		 */
 		this.accent = accent;
-		// Position object
+		
+		/**
+		 * The position of the shape
+		 * @private
+		 * @type {Object}
+		 */
 		this.pos = pos;
-		// Scale of the drawing
+		
+		/**
+		 * The scale factor of the drawing
+		 * @private
+		 * @type {Number}
+		 */
 		this.scale = scale;
-		// Computed cell size
+		
+		/**
+		 * The computed cell size
+		 * @private
+		 * @type {Number}
+		 */
 		this.cellSize = cellSize;
 		
-		// Get a color from the hash
+		/**
+		 * Returns a color among the primary and accent color, 
+		 * based on the hash
+		 * @private
+		 * @return {String}
+		 */
 		this.getColor = function() {
 			return [this.primary, this.accent][Math.abs(this.hash % 2)];
 		}
 		
+		/**
+		 * Generates a path to draw the shape
+		 * @private
+		 */
 		this.makePath = function() {
 			var mod = Math.abs(this.hash + 1) % 4;
 			
@@ -402,19 +741,26 @@
 				}
 			}
 
-		// Main draw function
-		this.draw = function() {
+		/**
+		 * Draws the shape on the canvas
+		 * @public
+		 * @param  {Boolean} hasStroke The hasStroke boolean
+		 * @param  {Number} strokeWeight The weight of the stroke
+		 */
+		this.draw = function(hasStroke, strokeWeight) {
 			var color = this.getColor();
 			
 			this.makePath();
 			ctx.fillStyle = color;
 			ctx.strokeStyle = 'black';
-			ctx.lineWidth = this.scale * (400 / c.width);
+			ctx.lineWidth = this.scale * ((4/5 * strokeWeight) / c.width);
 			ctx.lineJoin = "round";
 			ctx.lineCap = "round";
 			ctx.fill();
-			ctx.stroke();
+
+			if (hasStroke) {
+				ctx.stroke();
+			};
 		}
-		
-	}
+	};
 }());
