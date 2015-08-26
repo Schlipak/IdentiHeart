@@ -48,6 +48,20 @@
 		];
 
 		/**
+		 * The canvas DOM Element onto which the IdentiHeart is drawn
+		 * @private
+		 * @type {DOM Element}
+		 */
+		this.canvas = c;
+
+		/**
+		 * The 2D context of the canvas
+		 * @private
+		 * @type {CanvasRenderingContext2D}
+		 */
+		this.context = ctx;
+
+		/**
 		 * The primary color
 		 * @private
 		 * @type {String}
@@ -82,7 +96,7 @@
 		 * @private
 		 * @type {Number}
 		 */
-		this.cellSize = (c.width / 2) - (this.margin * this.scale);
+		this.cellSize = (this.canvas.width / 2) - (this.margin * this.scale);
 		
 		/**
 		 * The hashed username / input string
@@ -222,6 +236,30 @@
 		}
 
 		/**
+		 * Updates the attached canvas<br>
+		 * This can be useful to render a big amount of different icons without 
+		 * creating new instances of IdentiHeart, thus saving resources<br>
+		 * This function also updates the context of the canvas
+		 * @public
+		 * @optional
+		 * @param {DOM Element} c The canvas to attach to the IdentiHeart
+		 */
+		this.setCanvas = function(c) {
+			if (!(c instanceof HTMLElement)) {
+				console.warn('The parameter for the function IdentiHeart.setCanvas() must be a DOM Element.');
+				return false;
+			};
+
+			if (c.tagName !== 'CANVAS') {
+				console.warn('The parameter for the function IdentiHeart.setCanvas() must be a <canvas> element.');
+				return false;
+			};
+
+			this.canvas = c;
+			this.context = c.getContext('2d');
+		}
+
+		/**
 		 * The main drawing function<br>
 		 * Renders the IdentiHeart onto the canvas<br>
 		 * init() must be manually called before each render
@@ -233,10 +271,10 @@
 			this.init();
 
 			// Rotate the canvas -45deg
-			ctx.save();
-			ctx.translate(c.width/2, c.height/2);
-			ctx.rotate(- Math.PI / 4);
-			ctx.translate(-c.width/2, -c.height/2);
+			this.context.save();
+			this.context.translate(c.width/2, c.height/2);
+			this.context.rotate(- Math.PI / 4);
+			this.context.translate(-c.width/2, -c.height/2);
 
 			this.generateBlocks();
 			this.drawBlocks();
@@ -245,14 +283,14 @@
 				this.drawOutline();
 			};
 
-			this.shape = new Shape(c, ctx, this.hash, this.primary, this.accent, {
+			this.shape = new Shape(this.canvas, this.context, this.hash, this.primary, this.accent, {
 				x: (this.margin * this.scale) + 1.5 * this.cellSize,
 				y: (this.margin * this.scale) + 0.5 * this.cellSize
 			}, this.scale, this.cellSize);
 			this.shape.draw(this.hasStroke, this.strokeWeight);
 
 			// Restore the original matrix
-			ctx.restore();
+			this.context.restore();
 		}
 
 		/**
@@ -275,9 +313,9 @@
 			this.accent = PALETTE[Math.abs(subHash % PALETTE.length)];
 
 			// Clear the canvas
-			ctx.globalCompositeOperation = "source-over";
-			ctx.clearRect(0, 0, c.width, c.height);
-			ctx.globalCompositeOperation = this.compositeOperation;
+			this.context.globalCompositeOperation = "source-over";
+			this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+			this.context.globalCompositeOperation = this.compositeOperation;
 		}
 
 		/**
@@ -285,8 +323,8 @@
 		 * @private
 		 */
 		this.offset = function() {
-			ctx.save();
-			ctx.translate(0.6 * this.scale, - 0.6 * this.scale);
+			this.context.save();
+			this.context.translate(0.6 * this.scale, - 0.6 * this.scale);
 		}
 
 		/**
@@ -294,7 +332,7 @@
 		 * @private
 		 */
 		this.resetOffset = function() {
-			ctx.restore();
+			this.context.restore();
 		}
 
 		/**
@@ -303,35 +341,35 @@
 		 */
 		this.drawOutline = function() {
 			this.offset();
-			ctx.globalCompositeOperation = "source-over";
+			this.context.globalCompositeOperation = "source-over";
 
 			// Outer lines
-			ctx.beginPath();
-			ctx.moveTo(this.margin * this.scale, this.margin * this.scale);
-			ctx.lineTo(this.margin * this.scale, c.height - (this.margin * this.scale));
-			ctx.lineTo(c.width - (this.margin * this.scale), c.height - (this.margin * this.scale));
-			ctx.lineTo(c.width - (this.margin * this.scale), c.height / 2);
-			ctx.lineTo(c.width / 2, c.height / 2);
-			ctx.lineTo(c.width / 2, this.margin * this.scale);
-			ctx.closePath();
+			this.context.beginPath();
+			this.context.moveTo(this.margin * this.scale, this.margin * this.scale);
+			this.context.lineTo(this.margin * this.scale, this.canvas.height - (this.margin * this.scale));
+			this.context.lineTo(this.canvas.width - (this.margin * this.scale), this.canvas.height - (this.margin * this.scale));
+			this.context.lineTo(this.canvas.width - (this.margin * this.scale), this.canvas.height / 2);
+			this.context.lineTo(this.canvas.width / 2, this.canvas.height / 2);
+			this.context.lineTo(this.canvas.width / 2, this.margin * this.scale);
+			this.context.closePath();
 
-			ctx.strokeStyle = 'black';
-			ctx.lineWidth = this.scale * (this.strokeWeight / c.width);
-			ctx.lineJoin = "round";
-			ctx.lineCap = "round";
-			ctx.stroke();
+			this.context.strokeStyle = 'black';
+			this.context.lineWidth = this.scale * (this.strokeWeight / this.canvas.width);
+			this.context.lineJoin = "round";
+			this.context.lineCap = "round";
+			this.context.stroke();
 
 			// Inner lines
-			ctx.beginPath();
-			ctx.moveTo(c.width / 2, c.height / 2);
-			ctx.lineTo(this.margin * this.scale, c.height / 2);
-			ctx.moveTo(c.width / 2, c.height / 2);
-			ctx.lineTo(c.width / 2, c.height - (this.margin * this.scale));
+			this.context.beginPath();
+			this.context.moveTo(this.canvas.width / 2, this.canvas.height / 2);
+			this.context.lineTo(this.margin * this.scale, this.canvas.height / 2);
+			this.context.moveTo(this.canvas.width / 2, this.canvas.height / 2);
+			this.context.lineTo(this.canvas.width / 2, this.canvas.height - (this.margin * this.scale));
 
-			ctx.stroke();
+			this.context.stroke();
 
 			this.resetOffset();
-			ctx.globalCompositeOperation = this.compositeOperation;
+			this.context.globalCompositeOperation = this.compositeOperation;
 		}
 
 		/**
@@ -339,7 +377,7 @@
 		 * @private
 		 */
 		this.generateBlocks = function() {
-			var b1 = new Block(c, ctx, BlockType.ONE, this.primary, this.accent);
+			var b1 = new Block(this.canvas, this.context, BlockType.ONE, this.primary, this.accent);
 			b1.setHash(this.hash);
 			b1.setPos({
 				x: this.margin * this.scale,
@@ -348,20 +386,20 @@
 			b1.setSizing(this.cellSize, this.margin, this.scale);
 			this.blocks.push(b1);
 
-			var b2 = new Block(c, ctx, BlockType.TWO, this.primary, this.accent);
+			var b2 = new Block(this.canvas, this.context, BlockType.TWO, this.primary, this.accent);
 			b2.setHash(this.hash);
 			b2.setPos({
 				x: this.margin * this.scale,
-				y: c.height / 2
+				y: this.canvas.height / 2
 			});
 			b2.setSizing(this.cellSize, this.margin, this.scale);
 			this.blocks.push(b2);
 
-			var b3 = new Block(c, ctx, BlockType.THREE, this.primary, this.accent);
+			var b3 = new Block(this.canvas, this.context, BlockType.THREE, this.primary, this.accent);
 			b3.setHash(this.hash);
 			b3.setPos({
-				x: c.width / 2,
-				y: c.height / 2
+				x: this.canvas.width / 2,
+				y: this.canvas.height / 2
 			});
 			b3.setSizing(this.cellSize, this.margin, this.scale);
 			this.blocks.push(b3);
