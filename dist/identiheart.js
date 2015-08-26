@@ -23,6 +23,18 @@
 				return a & a
 			}, 0);
 		}
+
+		/**
+		 * Tests if the given object is a DOM Element
+		 * @param  {mixed} o An object or variable
+		 * @return {Boolean}
+		 */
+		this.isDOMElement = function(o) {
+			return (
+				typeof HTMLElement === "object" ? o instanceof HTMLElement :
+				o && typeof o === "object" && o !== null && o.nodeType === 1 && typeof o.nodeName==="string"
+			);
+		}
 	}
 
 	/**
@@ -244,8 +256,9 @@
 		 * @optional
 		 * @param {DOM Element} c The canvas to attach to the IdentiHeart
 		 */
-		this.setCanvas = function(c) {
-			if (!(c instanceof HTMLElement)) {
+		this.setCanvas = function(canvas) {
+			var crusher = new Crusher();
+			if (!crusher.isDOMElement(c)) {
 				console.warn('The parameter for the function IdentiHeart.setCanvas() must be a DOM Element.');
 				return false;
 			};
@@ -255,8 +268,8 @@
 				return false;
 			};
 
-			this.canvas = c;
-			this.context = c.getContext('2d');
+			this.canvas = canvas;
+			this.context = canvas.getContext('2d');
 		}
 
 		/**
