@@ -303,6 +303,7 @@
 		 */
 		this.drawOutline = function() {
 			this.offset();
+			ctx.globalCompositeOperation = "source-over";
 
 			// Outer lines
 			ctx.beginPath();
@@ -330,6 +331,7 @@
 			ctx.stroke();
 
 			this.resetOffset();
+			ctx.globalCompositeOperation = this.compositeOperation;
 		}
 
 		/**
@@ -749,6 +751,7 @@
 		 */
 		this.draw = function(hasStroke, strokeWeight) {
 			var color = this.getColor();
+			ctx.globalCompositeOperation = "source-over";
 			
 			this.makePath();
 			ctx.fillStyle = color;
