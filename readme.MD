@@ -140,6 +140,8 @@ Example: The IdentiHeart for the string `Composite`, rendered with the default c
 <img src="./img/composite-default.png" width="60">
 <img src="./img/composite-colorburn.png" width="60">
 
+**Note**: Strokes are excluded from the composite operations to avoid weird renders.
+
 **Note**: Some of the composite operations are not implemented in all browsers. The default `multiply` operation, for example, does not work as of today in IE/Edge. This will result in IdentiHearts rendering differently depending on the user's browser.
 
 ---
