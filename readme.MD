@@ -25,10 +25,12 @@ Create an HTML document, include the script, and create a `canvas` element the s
 	<script type="text/javascript" src="lib/identiheart.min.js"></script>
 </head>
 <body>
-	<canvas id="myCanvas" height="100" width="100"></canvas>
+	<canvas id="myCanvas" height="500" width="500"></canvas>
 </body>
 </html>
 ```
+
+**Note**: For a better render, you should use a 500*500 canvas element, then scale it to the desired size with CSS. Smaller size, typically lower than 300, may render the icon improperly. When using a different base canvas size, be sure to update the margin, scaling and stroke weight accordingly.
 
 ### Usage
 IdentiHeart gives you access to a class called `IdentiHeart`. The use is pretty simple and straight-forward.
@@ -146,13 +148,29 @@ Example: The IdentiHeart for the string `Composite`, rendered with the default c
 
 ---
 
+##### setCanvas
+
+```
+setCanvas(canvas)
+```
+
+* **canvas** *DOM Element*, the new canvas to which the IdentiHeart should attach
+
+> Sets a new canvas on which the IdentiHeart will be drawn. The canvas context will be updated as well. 
+> This can be particularly useful when generating a great amount of different IdentiHearts on different 
+> target canvases, by allowing you to generate and draw them all using he same object, thus saving resources.
+
+---
+
 ##### init
 
 ```
 init()
 ```
 
-> Initializes the IdentiHeart object and clears the canvas. Must be always called before drawing or refreshing the IdentiHeart.
+> Initializes the IdentiHeart object and clears the canvas. 
+
+**Note**: Be sure to always call this function before drawing or refreshing the IdentiHeart. Without it, some parts of the icon might overlap the previously generated one.
 
 ---
 
