@@ -15,8 +15,6 @@ This has been fixed in the [tree/master](https://github.com/Schlipak/IdentiHeart
 **IdentiHeart** is a vanilla JavaScript library, that generates procedural, canvas-based, fun identicons!
 Oh, and it's also pretty fast, as in instant.
 
-[See it in action](http://schlipak.github.io/IdentiHeart/ "Demo")
-
 ### Installation
 Download or clone the IdentiHeart repository.
 
