@@ -5,6 +5,10 @@
 	<link rel="stylesheet" href="//code.jquery.com/qunit/qunit-1.18.0.css">
 	<script type="text/javascript" src="../dist/identiheart.js"></script>
 	<style type="text/css">
+		* {
+			box-sizing: border-box;
+		}
+
 		canvas {
 			display: none;
 		}
@@ -28,20 +32,63 @@
 			border-radius: 3px;
 		}
 
+		.colors:after {
+			content: attr(data-seed);
+			display: block;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			text-align: center;
+			line-height: 50px;
+			color: white;
+			font-family: Geneva, Tahoma, Verdana, sans-serif;
+			text-shadow: 0 0 2px black;
+		}
+
 		.color {
 			position: relative;
 			display: inline-block;
 			width: 50px;
 			height: 50px;
 		}
+
+		h1 {
+			position: relative;
+			display: block;
+			width: 100%;
+			text-align: center;
+			font-family: Geneva, Tahoma, Verdana, sans-serif;
+			color: #212121;
+			font-size: 22px;
+		}
+
+		h1>.sub {
+			color: #727272;
+			font-size: 0.8em;
+		}
+
+		#running {
+			position: relative;
+			display: block;
+			width: 100%;
+			text-align: center;
+			font-size: 22px;
+			font-family: Geneva, Tahoma, Verdana, sans-serif;
+		}
 	</style>
 </head>
 <body>
+	<span id="running">Running...</span>
+
 	<div id="qunit"></div>
 	<div id="qunit-fixture"></div>
 
 	<canvas id="myCanvas"></canvas>
-	<div class="color-container" id="colors-results"></div>
+	<div class="color-container" id="colors-results">
+		
+	</div>
 
 	<script src="//code.jquery.com/qunit/qunit-1.18.0.js"></script>
 	<script type="text/javascript">
@@ -91,18 +138,35 @@
 
 				generatedCombinaisons.pushIfNotExist({
 					primary: h.primary,
-					accent: h.accent
+					accent: h.accent,
+					seed: i
 				}, function(e) {
 					return e.primary === h.primary && e.accent === h.accent;
 				});
 			};
 
+			var running = document.getElementById('running');
+			running.parentNode.removeChild(running);
+
+			var title = document.createElement('H1');
+			title.setAttribute('id', 'color-title');
+			var titleText = document.createTextNode('Generated combinations');
+			title.appendChild(titleText);
+			var subTitle = document.createElement('DIV');
+			subTitle.className += " sub";
+			var subTitleText = document.createTextNode('and their respective seed');
+			subTitle.appendChild(subTitleText);
+			title.appendChild(subTitle);
+			container.appendChild(title);
+
 			for(var i = 0; i < generatedCombinaisons.length; i++) {
 				var primary = generatedCombinaisons[i].primary;
 				var accent = generatedCombinaisons[i].accent;
+				var seed = generatedCombinaisons[i].seed;
 
 				var group = document.createElement('DIV');
 				group.className += " colors";
+				group.setAttribute('data-seed', seed);
 				var c1 = document.createElement('DIV');
 				c1.className += " color";
 				c1.style.backgroundColor = primary;
@@ -114,7 +178,6 @@
 				container.appendChild(group);
 			}
 
-			console.log(generatedCombinaisons.length);
 			assert.equal(generatedPalette.length, palette.length, "All the palette is used");
 			assert.equal(generatedCombinaisons.length, Math.pow(palette.length, 2), "All combinaisons are used");
 		});
