@@ -256,7 +256,7 @@
 		 * @optional
 		 * @param {DOM Element} c The canvas to attach to the IdentiHeart
 		 */
-		this.setCanvas = function(c) {
+		this.setCanvas = function(canvas) {
 			var crusher = new Crusher();
 			if (!crusher.isDOMElement(c)) {
 				console.warn('The parameter for the function IdentiHeart.setCanvas() must be a DOM Element.');
@@ -268,8 +268,8 @@
 				return false;
 			};
 
-			this.canvas = c;
-			this.context = c.getContext('2d');
+			this.canvas = canvas;
+			this.context = canvas.getContext('2d');
 		}
 
 		/**
