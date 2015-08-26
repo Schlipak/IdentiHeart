@@ -122,7 +122,7 @@
 				'#FFEB3B', '#FFC107', '#FF9800', '#FF5722', '#795548', '#607D8B'
 			];
 			var generatedPalette = [];
-			var generatedCombinaisons = [];
+			var generatedCombinations = [];
 
 			for(var i = 0; i < 70000; i++) {				
 				h.setUsername(String(i));
@@ -136,7 +136,7 @@
 					return e === h.accent;
 				});
 
-				generatedCombinaisons.pushIfNotExist({
+				generatedCombinations.pushIfNotExist({
 					primary: h.primary,
 					accent: h.accent,
 					seed: i
@@ -159,10 +159,10 @@
 			title.appendChild(subTitle);
 			container.appendChild(title);
 
-			for(var i = 0; i < generatedCombinaisons.length; i++) {
-				var primary = generatedCombinaisons[i].primary;
-				var accent = generatedCombinaisons[i].accent;
-				var seed = generatedCombinaisons[i].seed;
+			for(var i = 0; i < generatedCombinations.length; i++) {
+				var primary = generatedCombinations[i].primary;
+				var accent = generatedCombinations[i].accent;
+				var seed = generatedCombinations[i].seed;
 
 				var group = document.createElement('DIV');
 				group.className += " colors";
@@ -179,7 +179,7 @@
 			}
 
 			assert.equal(generatedPalette.length, palette.length, "All the palette is used");
-			assert.equal(generatedCombinaisons.length, Math.pow(palette.length, 2), "All combinaisons are used");
+			assert.equal(generatedCombinations.length, Math.pow(palette.length, 2), "All combinations are used");
 		});
 	</script>
 </body>
