@@ -38,16 +38,16 @@
 	}
 
 	/**
-	 * @class Heart
+	 * @class IdentiHeart
 	 * @public
 	 * @constructor
-	 * @this {Heart}
+	 * @this {IdentiHeart}
 	 * @param {DOM Element} c The canvas onto which the IdentiHeart is drawn
 	 * @param {CanvasRenderingContext2D} ctx The 2D context of the canvas
 	 * @param {Number} margin The margin to draw around the icon. Optional, default 5
 	 * @param {Number} scale The scale factor of the drawing. Optional, default 20
 	 */
-	Heart = function(c, ctx, margin, scale) {
+	IdentiHeart = function(c, ctx, margin, scale) {
 		/**
 		 * The color palette used by the renderer to draw the icon
 		 * @private
@@ -195,7 +195,7 @@
 		 */
 		this.setHasStroke = function(b) {
 			if (typeof b !== 'boolean') {
-				console.warn('The parameter for the function Heart.setHasStroke() must be a boolean.');
+				console.warn('The parameter for the function IdentiHeart.setHasStroke() must be a boolean.');
 				return false;
 			};
 
@@ -214,7 +214,7 @@
 		 */
 		this.setStrokeWeight = function(weight) {
 			if (typeof weight !== 'number') {
-				console.warn('The parameter for the function Heart.setStrokeWeight() must be a number.');
+				console.warn('The parameter for the function IdentiHeart.setStrokeWeight() must be a number.');
 				return false;
 			};
 
@@ -277,7 +277,7 @@
 		 * Renders the IdentiHeart onto the canvas<br>
 		 * init() must be manually called before each render
 		 * @public
-		 * @see Heart.init()
+		 * @see IdentiHeart.init()
 		 * @required
 		 */
 		this.draw = function() {
@@ -310,7 +310,7 @@
 		 * Initializes the IdentiHeart and clears the canvas<br>
 		 * Must be called before draw()
 		 * @public
-		 * @see Heart.draw()
+		 * @see IdentiHeart.draw()
 		 * @required
 		 */
 		this.init = function() {
@@ -386,7 +386,7 @@
 		}
 
 		/**
-		 * Generates the blocks of this Heart
+		 * Generates the blocks of this IdentiHeart
 		 * @private
 		 */
 		this.generateBlocks = function() {
