@@ -158,10 +158,12 @@
 		 * Sets the username or string to generate the drawing from
 		 * @public
 		 * @param {String}
+		 * @returns {IdentiHeart} this
 		 */
 		this.setUsername = function(string) {
 			var crusher = new Crusher();
 			this.hash = crusher.hash(string);
+			return this;
 		}
 
 		/**
@@ -169,7 +171,7 @@
 		 * @public
 		 * @param {Array<String>}
 		 * @optional
-		 * @returns {mixed} false on failure
+		 * @returns {mixed} false on failure, this on success
 		 */
 		this.setPalette = function(palette) {
 			if (typeof palette !== typeof [] || palette.length === undefined) {
@@ -183,6 +185,7 @@
 			};
 
 			PALETTE = palette;
+			return this;
 		}
 
 		/**
@@ -191,7 +194,7 @@
 		 * @param {Boolean} b The state of the stroke
 		 * @optional
 		 * @default true
-		 * @returns {mixed} false on failure
+		 * @returns {mixed} false on failure, this on success
 		 */
 		this.setHasStroke = function(b) {
 			if (typeof b !== 'boolean') {
@@ -200,6 +203,7 @@
 			};
 
 			this.hasStroke = b;
+			return this;
 		}
 
 		/**
@@ -210,7 +214,7 @@
 		 * @param {Number} weight The weight factor of the stroke
 		 * @optional
 		 * @default 500
-		 * @returns {mixed} false on failure
+		 * @returns {mixed} false on failure, this on success
 		 */
 		this.setStrokeWeight = function(weight) {
 			if (typeof weight !== 'number') {
@@ -219,6 +223,7 @@
 			};
 
 			this.strokeWeight = weight;
+			return this;
 		}
 
 		/**
@@ -227,7 +232,7 @@
 		 * @param {String} operation The composite operation
 		 * @optional
 		 * @default 'multiply'
-		 * @returns {mixed} false on failure
+		 * @returns {mixed} false on failure, this on success
 		 */
 		this.setCompositeOperation = function(operation) {
 			var validOperations = [
@@ -245,6 +250,7 @@
 			};
 
 			this.compositeOperation = operation;
+			return this;
 		}
 
 		/**
@@ -255,6 +261,7 @@
 		 * @public
 		 * @optional
 		 * @param {DOM Element} c The canvas to attach to the IdentiHeart
+		 * @returns {IdentiHeart} this
 		 */
 		this.setCanvas = function(canvas) {
 			var crusher = new Crusher();
@@ -270,6 +277,7 @@
 
 			this.canvas = canvas;
 			this.context = canvas.getContext('2d');
+			return this;
 		}
 
 		/**
@@ -279,6 +287,7 @@
 		 * @public
 		 * @see IdentiHeart.init()
 		 * @required
+		 * @returns {IdentiHeart} this
 		 */
 		this.draw = function() {
 			this.init();
@@ -304,6 +313,8 @@
 
 			// Restore the original matrix
 			this.context.restore();
+
+			return this;
 		}
 
 		/**
@@ -312,6 +323,7 @@
 		 * @public
 		 * @see IdentiHeart.draw()
 		 * @required
+		 * @returns {IdentiHeart} this
 		 */
 		this.init = function() {
 			// Purge the block array
@@ -329,6 +341,8 @@
 			this.context.globalCompositeOperation = "source-over";
 			this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 			this.context.globalCompositeOperation = this.compositeOperation;
+
+			return this;
 		}
 
 		/**
