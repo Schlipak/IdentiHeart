@@ -46,8 +46,30 @@
 	 * @param {CanvasRenderingContext2D} ctx The 2D context of the canvas
 	 * @param {Number} margin The margin to draw around the icon. Optional, default 5
 	 * @param {Number} scale The scale factor of the drawing. Optional, default 20
+	 * @returns {IdentiHeart} this
 	 */
 	IdentiHeart = function(c, ctx, margin, scale) {
+		/**
+		 * Constructor parameters error check
+		 */
+		if (typeof c === 'undefined') {
+			throw new Error('Cannot instantiate an IdentiHeart without a target canvas.');
+		};
+
+		var crusher = new Crusher();
+		if (!crusher.isDOMElement(c)) {
+			throw new Error('The target canvas must be a DOM Element.');
+		};
+
+		if (c.tagName !== 'CANVAS') {
+			throw new Error('The target canvas must be a <canvas> element.');
+		};
+
+		if (typeof ctx === 'undefined') {
+			console.info('No canvas 2D context was provided. Extracting from the target canvas...');
+			ctx = c.getContext('2d');
+		};
+
 		/**
 		 * The color palette used by the renderer to draw the icon
 		 * @private
@@ -445,6 +467,8 @@
 				this.blocks[i].draw();
 			}
 		}
+
+		return this;
 	};
 
 	/**
