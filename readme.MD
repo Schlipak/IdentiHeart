@@ -54,13 +54,15 @@ This will generate the following image, inside the `myCanvas` element.<br />
 ##### Constructor
 
 ```
-IdentiHeart(canvas, context, [margin, scale])
+IdentiHeart(canvas, [context, margin, scale])
 ```
 
-* **canvas** *DOM Element*, The canvas in which to draw.<br/>
-* **context** *CanvasRenderingContext2D*, the context of the canvas.<br/>
-* **margin** *number*, margin to put around the drawing. Optional, default 5.<br/>
+* **canvas** *DOM Element*, The canvas in which to draw.
+* **context** *CanvasRenderingContext2D*, the context of the canvas. Optional, retrieved from *canvas* if missing.
+* **margin** *number*, margin to put around the drawing. Optional, default 5.
 * **scale** *number*, pixel scale factor. Optional, default 20.
+
+* **Returns** *IdentiHeart* this
 
 > Constructs a new IdentiHeart object attached to the given canvas. Margins and scale factor can be optionally set to tweak the output.
 
