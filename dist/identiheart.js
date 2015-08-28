@@ -283,7 +283,7 @@
 		 * @public
 		 * @optional
 		 * @param {DOM Element} c The canvas to attach to the IdentiHeart
-		 * @returns {IdentiHeart} this
+		 * @returns {mixed} false on failure, this on success
 		 */
 		this.setCanvas = function(canvas) {
 			var crusher = new Crusher();
