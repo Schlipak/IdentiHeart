@@ -57,12 +57,14 @@ This will generate the following image, inside the `myCanvas` element.<br />
 IdentiHeart(canvas, [context, margin, scale])
 ```
 
+###### Parameters
 * **canvas** *DOM Element*, The canvas in which to draw.
-* **context** *CanvasRenderingContext2D*, the context of the canvas. Optional, retrieved from *canvas* if missing.
+* **context** *CanvasRenderingContext2D*, the context of the canvas.
 * **margin** *number*, margin to put around the drawing. Optional, default 5.
 * **scale** *number*, pixel scale factor. Optional, default 20.
 
-* **Returns** *IdentiHeart* this
+###### Return value
+* *IdentiHeart* this
 
 > Constructs a new IdentiHeart object attached to the given canvas. Margins and scale factor can be optionally set to tweak the output.
 
@@ -74,9 +76,11 @@ IdentiHeart(canvas, [context, margin, scale])
 setUsername(string)
 ```
 
+###### Parameters
 * **string** *string*, the username or string to use to generate the IdentiHeart.
 
-* **Returns** *IdentiHeart* this
+###### Return value
+* *IdentiHeart* this
 
 > Sets the value of the username or string to use while generating the IdentiHeart. The string is hashed automatically.
 
@@ -88,9 +92,12 @@ setUsername(string)
 setPalette(palette)
 ```
 
+###### Parameters
 * **palette** *array&lt;string&gt;*, an array of color values
 
-* **Returns** *IdentiHeart* this
+###### Return value
+* *IdentiHeart* this, on success
+* *boolean* false, on failure
 
 > Replaces the default palette used by the generator to color the IdentiHeart. The array must contain at least two colors. Colors can be represented as hex, rgb or html name.
 
@@ -102,9 +109,12 @@ setPalette(palette)
 setHasStroke(b)
 ```
 
+###### Parameters
 * **b** *boolean*, the hasStroke boolean
 
-* **Returns** *IdentiHeart* this
+###### Return value
+* *IdentiHeart* this, on success
+* *boolean* false, on failure
 
 > Sets if the icon should be draw with a stroke. Optional, default `true`.
 
@@ -119,9 +129,12 @@ Example: `setHasStroke(false);`<br>
 setStrokeWeight(weight)
 ```
 
+###### Parameters
 * **weight** *number*, the weight factor of the stroke
 
-* **Returns** *IdentiHeart* this
+###### Return value
+* *IdentiHeart* this, on success
+* *boolean* false, on failure
 
 > Sets the weight of the stroke. The value does not represent the final pixel size of the stroke but is merely a multiplication factor. Optional, default `500`.
 
@@ -136,9 +149,12 @@ Example: `setStrokeWeight(200);`<br>
 setCompositeOperation(operation)
 ```
 
+###### Parameters
 * **operation** *string*, the composite operation
 
-* **Returns** *IdentiHeart* this
+###### Return value
+* *IdentiHeart* this, on success
+* *boolean* false, on failure
 
 > Sets the composite operation that will be used by the renderer to draw the icon. Optional, default `multiply`.<br>
 > Valid values:
@@ -166,9 +182,12 @@ Example: The IdentiHeart for the string `Composite`, rendered with the default c
 setCanvas(canvas)
 ```
 
+###### Parameters
 * **canvas** *DOM Element*, the new canvas to which the IdentiHeart should attach
 
-* **Returns** *IdentiHeart* this
+###### Return value
+* *IdentiHeart* this, on success
+* *boolean* false, on failure
 
 > Sets a new canvas on which the IdentiHeart will be drawn. The canvas context will be updated as well. 
 > This can be particularly useful when generating a great amount of different IdentiHearts on different 
@@ -181,8 +200,11 @@ setCanvas(canvas)
 ```
 init()
 ```
+###### Parameters
+*none*
 
-* **Returns** *IdentiHeart* this
+###### Return value
+* *IdentiHeart* this
 
 > Initializes the IdentiHeart object and clears the canvas. 
 
@@ -196,6 +218,10 @@ init()
 draw()
 ```
 
-* **Returns** *IdentiHeart* this
+###### Parameters
+*none*
+
+###### Return value
+* *IdentiHeart* this
 
 > Renders the computed IdentiHeart onto the attached canvas.
