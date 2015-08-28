@@ -74,6 +74,8 @@ setUsername(string)
 
 * **string** *string*, the username or string to use to generate the IdentiHeart.
 
+* **Returns** *IdentiHeart* this
+
 > Sets the value of the username or string to use while generating the IdentiHeart. The string is hashed automatically.
 
 ---
@@ -86,6 +88,8 @@ setPalette(palette)
 
 * **palette** *array&lt;string&gt;*, an array of color values
 
+* **Returns** *IdentiHeart* this
+
 > Replaces the default palette used by the generator to color the IdentiHeart. The array must contain at least two colors. Colors can be represented as hex, rgb or html name.
 
 ---
@@ -97,6 +101,8 @@ setHasStroke(b)
 ```
 
 * **b** *boolean*, the hasStroke boolean
+
+* **Returns** *IdentiHeart* this
 
 > Sets if the icon should be draw with a stroke. Optional, default `true`.
 
@@ -113,6 +119,8 @@ setStrokeWeight(weight)
 
 * **weight** *number*, the weight factor of the stroke
 
+* **Returns** *IdentiHeart* this
+
 > Sets the weight of the stroke. The value does not represent the final pixel size of the stroke but is merely a multiplication factor. Optional, default `500`.
 
 Example: `setStrokeWeight(200);`<br>
@@ -127,6 +135,8 @@ setCompositeOperation(operation)
 ```
 
 * **operation** *string*, the composite operation
+
+* **Returns** *IdentiHeart* this
 
 > Sets the composite operation that will be used by the renderer to draw the icon. Optional, default `multiply`.<br>
 > Valid values:
@@ -156,6 +166,8 @@ setCanvas(canvas)
 
 * **canvas** *DOM Element*, the new canvas to which the IdentiHeart should attach
 
+* **Returns** *IdentiHeart* this
+
 > Sets a new canvas on which the IdentiHeart will be drawn. The canvas context will be updated as well. 
 > This can be particularly useful when generating a great amount of different IdentiHearts on different 
 > target canvases, by allowing you to generate and draw them all using he same object, thus saving resources.
@@ -168,6 +180,8 @@ setCanvas(canvas)
 init()
 ```
 
+* **Returns** *IdentiHeart* this
+
 > Initializes the IdentiHeart object and clears the canvas. 
 
 **Note**: Be sure to always call this function before drawing or refreshing the IdentiHeart. Without it, some parts of the icon might overlap the previously generated one.
@@ -179,5 +193,7 @@ init()
 ```
 draw()
 ```
+
+* **Returns** *IdentiHeart* this
 
 > Renders the computed IdentiHeart onto the attached canvas.
