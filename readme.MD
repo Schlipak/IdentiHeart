@@ -22,7 +22,7 @@ Create an HTML document, include the script, and create a `canvas` element the s
 <html>
 <head>
 	<title>Hello IdentiHeart</title>
-	<script type="text/javascript" src="lib/identiheart.min.js"></script>
+	<script type="text/javascript" src="path/to/IdentiHeart/dist/identiheart.min.js"></script>
 </head>
 <body>
 	<canvas id="myCanvas" height="500" width="500"></canvas>
