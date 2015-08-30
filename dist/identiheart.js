@@ -15,7 +15,7 @@
 		 * Hashes the given string
 		 * @public
 		 * @param  {String} s The string to hash
-		 * @return {Number} The hash
+		 * @returns {Number} The hash
 		 */
 		this.hash = function(s) {
 			return String(s).split("").reduce(function(a, b) {
@@ -27,7 +27,7 @@
 		/**
 		 * Tests if the given object is a DOM Element
 		 * @param  {mixed} o An object or variable
-		 * @return {Boolean}
+		 * @returns {Boolean}
 		 */
 		this.isDOMElement = function(o) {
 			return (
@@ -770,7 +770,7 @@
 		 * Returns a color among the primary and accent color, 
 		 * based on the hash
 		 * @private
-		 * @return {String}
+		 * @returns {String}
 		 */
 		this.getColor = function() {
 			return [this.primary, this.accent][Math.abs(this.hash % 2)];
