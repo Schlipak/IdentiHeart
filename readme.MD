@@ -1,4 +1,4 @@
-IdentiHeart <img src="./img/identiheart.png" width="40">
+IdentiHeart <img src="http://i.imgur.com/pY7MORM.png" width="40">
 ===========
 
 *Identicons* are images typically generated from a user's id or hashed username, to create a default, unique image.
@@ -48,7 +48,7 @@ h.draw();
 ```
 
 This will generate the following image, inside the `myCanvas` element.<br />
-<img src="./img/example.png" width="130">
+<img src="http://i.imgur.com/PvKrQ6m.png" width="130">
 
 ### Methods
 ##### Constructor
@@ -101,7 +101,7 @@ setHasStroke(b)
 > Sets if the icon should be draw with a stroke. Optional, default `true`.
 
 Example: `setHasStroke(false);`<br>
-<img src="./img/nostroke.png" width="60">
+<img src="http://i.imgur.com/00cveLO.png" width="60">
 
 ---
 
@@ -116,7 +116,7 @@ setStrokeWeight(weight)
 > Sets the weight of the stroke. The value does not represent the final pixel size of the stroke but is merely a multiplication factor. Optional, default `500`.
 
 Example: `setStrokeWeight(200);`<br>
-<img src="./img/strokeweight.png" width="60">
+<img src="http://i.imgur.com/KXqU2Fe.png" width="60">
 
 ---
 
@@ -139,8 +139,8 @@ setCompositeOperation(operation)
 ```
 
 Example: The IdentiHeart for the string `Composite`, rendered with the default composite operation and with `color-burn`.<br>
-<img src="./img/composite-default.png" width="60">
-<img src="./img/composite-colorburn.png" width="60">
+<img src="http://i.imgur.com/p2rRkyT.png" width="60">
+<img src="http://i.imgur.com/3TdFOnt.png" width="60">
 
 **Note**: Strokes are excluded from the composite operations to avoid weird renders.
 
