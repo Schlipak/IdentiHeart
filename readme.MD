@@ -159,7 +159,7 @@ setStrokeColor(color)
 > Sets the color of the stroke. The value can be an HTML color name, or hex/rgb color value. Optional, default `#000000`.
 
 Example: `setStrokeColor('red');`<br>
-<img src="" width="60">
+<img src="http://i.imgur.com/D2ekdN1.png" width="60">
 
 ---
 
