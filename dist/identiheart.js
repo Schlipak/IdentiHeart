@@ -356,7 +356,7 @@
 			this.shape = new Shape(this.canvas, this.context, this.hash, this.primary, this.accent, {
 				x: (this.margin * this.scale) + 1.5 * this.cellSize,
 				y: (this.margin * this.scale) + 0.5 * this.cellSize
-			}, this.scale, this.cellSize);
+			}, this.scale, this.cellSize, this.strokeColor);
 			this.shape.draw(this.hasStroke, this.strokeWeight);
 
 			// Restore the original matrix
@@ -749,7 +749,7 @@
 	 * @param {Number} scale The scale factor of the drawing
 	 * @param {Number} cellSize The computed cell size
 	 */
-	var Shape = function(c, ctx, hash, primary, accent, pos, scale, cellSize) {
+	var Shape = function(c, ctx, hash, primary, accent, pos, scale, cellSize, strokeColor) {
 		/**
 		 * The hashed username / string to use to generate the shape
 		 * @private
@@ -791,6 +791,13 @@
 		 * @type {Number}
 		 */
 		this.cellSize = cellSize;
+
+		/**
+		 * The stroke color
+		 * @private
+		 * @type {String}
+		 */
+		this.strokeColor = strokeColor;
 		
 		/**
 		 * Returns a color among the primary and accent color, 
@@ -870,7 +877,7 @@
 			
 			this.makePath();
 			ctx.fillStyle = color;
-			ctx.strokeStyle = 'black';
+			ctx.strokeStyle = strokeColor;
 			ctx.lineWidth = this.scale * ((4/5 * strokeWeight) / c.width);
 			ctx.lineJoin = "round";
 			ctx.lineCap = "round";
