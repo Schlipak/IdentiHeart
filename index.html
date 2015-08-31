@@ -181,6 +181,10 @@
 						<span id="strokeWeight-display">500</span>
 					</div>
 				</label>
+				<label for="strokeColor">
+					Stroke color
+					<input type="color" id="strokeColor" value="#000000">
+				</label>
 				<label for="compositeOperation">
 					Composite operation
 					<select name="compositeOperation" id="compositeOperation">
@@ -231,9 +235,10 @@
 		var uInput = document.getElementById("username");
 		var hasStrokeInput = document.getElementById('hasStroke');
 		var strokeWeightInput = document.getElementById('strokeWeight');
+		var strokeColorInput = document.getElementById('strokeColor');
 		var compositeOperationInput = document.getElementById('compositeOperation');
 
-		var username, hasStroke, strokeWeight, compositeOperation;
+		var username, hasStroke, strokeWeight, strokeColor, compositeOperation;
 
 		var h = new IdentiHeart(c, ctx);
 		refreshValues();
@@ -243,6 +248,7 @@
 			username = uInput.value;
 			hasStroke = hasStrokeInput.checked;
 			strokeWeight = Number(strokeWeightInput.value);
+			strokeColor = strokeColorInput.value;
 			compositeOperation = compositeOperationInput.options[compositeOperationInput.selectedIndex].value;
 		}
 
@@ -250,6 +256,7 @@
 			h.setUsername(username);
 			h.setHasStroke(hasStroke);
 			h.setStrokeWeight(strokeWeight);
+			h.setStrokeColor(strokeColor);
 			h.setCompositeOperation(compositeOperation);
 
 			h.init();
@@ -270,6 +277,11 @@
 			val = e.target.value;
 			document.getElementById('strokeWeight-display').innerHTML = val;
 
+			refreshValues();
+			redraw();
+		}
+
+		strokeColorInput.onchange = function(e) {
 			refreshValues();
 			redraw();
 		}
