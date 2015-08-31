@@ -143,6 +143,26 @@ Example: `setStrokeWeight(200);`<br>
 
 ---
 
+##### setStrokeColor
+
+```
+setStrokeColor(color)
+```
+
+###### Parameters
+* **color** *string*, the stroke color
+
+###### Return value
+* *IdentiHeart* this, on success
+* *boolean* false, on failure
+
+> Sets the color of the stroke. The value can be an HTML color name, or hex/rgb color value. Optional, default `#000000`.
+
+Example: `setStrokeColor('red');`<br>
+<img src="" width="60">
+
+---
+
 ##### setCompositeOperation
 
 ```
