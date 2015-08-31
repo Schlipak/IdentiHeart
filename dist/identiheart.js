@@ -15,7 +15,7 @@
 		 * Hashes the given string
 		 * @public
 		 * @param  {String} s The string to hash
-		 * @return {Number} The hash
+		 * @returns {Number} The hash
 		 */
 		this.hash = function(s) {
 			return String(s).split("").reduce(function(a, b) {
@@ -27,7 +27,7 @@
 		/**
 		 * Tests if the given object is a DOM Element
 		 * @param  {mixed} o An object or variable
-		 * @return {Boolean}
+		 * @returns {Boolean}
 		 */
 		this.isDOMElement = function(o) {
 			return (
@@ -169,6 +169,14 @@
 		this.strokeWeight = 500;
 
 		/**
+		 * The color of the stroke
+		 * @private
+		 * @type {String}
+		 * @default "#000000"
+		 */
+		this.strokeColor = "#000000";
+
+		/**
 		 * The composite operation used by the renderer
 		 * @private
 		 * @type {String}
@@ -245,6 +253,24 @@
 			};
 
 			this.strokeWeight = weight;
+			return this;
+		}
+
+		/**
+		 * Sets the stroke color
+		 * @public
+		 * @param {String} color The color of the stroke
+		 * @optional
+		 * @default "#000000"
+		 * @returns {mixed} false on failure, this on success
+		 */
+		this.setStrokeColor = function(color) {
+			if (typeof color !== 'string') {
+				console.warn('The stroke color must be a string.');
+				return false;
+			};
+
+			this.strokeColor = color;
 			return this;
 		}
 
@@ -402,7 +428,7 @@
 			this.context.lineTo(this.canvas.width / 2, this.margin * this.scale);
 			this.context.closePath();
 
-			this.context.strokeStyle = 'black';
+			this.context.strokeStyle = this.strokeColor;
 			this.context.lineWidth = this.scale * (this.strokeWeight / this.canvas.width);
 			this.context.lineJoin = "round";
 			this.context.lineCap = "round";
@@ -770,7 +796,7 @@
 		 * Returns a color among the primary and accent color, 
 		 * based on the hash
 		 * @private
-		 * @return {String}
+		 * @returns {String}
 		 */
 		this.getColor = function() {
 			return [this.primary, this.accent][Math.abs(this.hash % 2)];
