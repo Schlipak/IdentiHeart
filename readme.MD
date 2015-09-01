@@ -1,7 +1,7 @@
 IdentiHeart <img src="http://i.imgur.com/pY7MORM.png" width="40">
 ===========
 
-* [IdentiHeart](#identiheart)
+* [IdentiHeart](#identiheart-)
 	- [Installation](#installation)
 	- [Usage](#usage)
 	- [Methods](#methods)
