@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="image/png">
+	<script type="text/javascript" src="../dist/identiheart.min.js"></script>
+</head>
+<body>
+	<canvas id="img" width="500" height="500"></canvas>
+	<script type="text/javascript">
+		var username;
+
+		if (window.location.hash) {
+			username = document.location.hash.substr(1).split('.png')[0];
+		} else {
+			throw Error();
+		};
+
+		var c = document.getElementById('img');
+		var h = new IdentiHeart(c, c.getContext('2d'));
+		h.setHasStroke(false);
+		h.setUsername(username);
+		h.init();
+		h.draw();
+
+		var data = c.toDataURL('image/png');
+		var dataURL = document.createTextNode(data);
+		document.querySelector('html').removeChild(document.querySelector('head'));
+		document.querySelector('html').removeChild(document.querySelector('body'));
+		document.querySelector('html').appendChild(dataURL);
+	</script>
+</body>
+</html>
