@@ -878,7 +878,7 @@
 			
 			this.makePath();
 			ctx.fillStyle = color;
-			ctx.strokeStyle = strokeColor;
+			ctx.strokeStyle = this.strokeColor;
 			ctx.lineWidth = this.scale * ((4/5 * strokeWeight) / c.width);
 			ctx.lineJoin = "round";
 			ctx.lineCap = "round";
