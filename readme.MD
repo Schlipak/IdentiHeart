@@ -1,6 +1,21 @@
 IdentiHeart <img src="http://i.imgur.com/pY7MORM.png" width="40">
 ===========
 
+* [IdentiHeart](#identiheart)
+	- [Installation](#installation)
+	- [Usage](#usage)
+	- [Methods](#methods)
+		+ [Constructor](#constructor)
+		+ [setUsername](#setusername)
+		+ [setPalette](#setpalette)
+		+ [setHasStroke](#sethasstroke)
+		+ [setStrokeWeight](#setstrokeweight)
+		+ [setStrokeColor](#setstrokecolor)
+		+ [setCompositeOperation](#setcompositeoperation)
+		+ [setCanvas](#setcanvas)
+		+ [init](#init)
+		+ [draw](#draw)
+
 *Identicons* are images typically generated from a user's id or hashed username, to create a default, unique image.
 **IdentiHeart** is a vanilla JavaScript library, that generates procedural, canvas-based, fun identicons!
 Oh, and it's also pretty fast, as in instant.
@@ -192,7 +207,8 @@ Example: The IdentiHeart for the string `Composite`, rendered with the default c
 
 **Note**: Strokes are excluded from the composite operations to avoid weird renders.
 
-**Note**: Some of the composite operations are not implemented in all browsers. The default `multiply` operation, for example, does not work as of today in IE/Edge. This will result in IdentiHearts rendering differently depending on the user's browser.
+**Note**: Some of the composite operations are not implemented in all browsers. The default `multiply` operation, for example, does not work as of today in IE/Edge. This will result in IdentiHearts rendering differently depending on the user's browser.  
+<sub><sub>*To be exact, almost nothing will work as of today in IE/Edge. Come on, Microsoft!*</sub></sub>
 
 ---
 
