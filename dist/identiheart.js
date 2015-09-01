@@ -748,6 +748,7 @@
 	 * @param {Object} pos The position of the shape
 	 * @param {Number} scale The scale factor of the drawing
 	 * @param {Number} cellSize The computed cell size
+	 * @param {String} strokeColor The stroke color
 	 */
 	var Shape = function(c, ctx, hash, primary, accent, pos, scale, cellSize, strokeColor) {
 		/**
