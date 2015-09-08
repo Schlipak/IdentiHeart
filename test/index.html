@@ -179,8 +179,16 @@
 				container.appendChild(group);
 			}
 
-			assert.equal(generatedPalette.length, palette.length, "All the palette is used");
-			assert.equal(generatedCombinations.length, Math.pow(palette.length, 2), "All combinations are used");
+			assert.equal(
+				generatedPalette.length, 
+				palette.length, 
+				"All the palette is used (" + generatedPalette.length + "/" + palette.length + ")"
+			);
+			assert.equal(
+				generatedCombinations.length, 
+				Math.pow(palette.length, 2), 
+				"All combinations are used (" + generatedCombinations.length + "/" + Math.pow(palette.length, 2) + ")"
+			);
 		});
 	</script>
 </body>
