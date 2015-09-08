@@ -325,7 +325,11 @@
 		d.onclick = function() {
 			var d = c.toDataURL("image/png");
 			var w = window.open('about:blank','_blank');
+			var title = 'IdentiHeart - '+username;
+			var fakeUrl = '/IdentiHeart/'+username+'.png';
+			var script = "<script>(function(){var t = document.createElement('title');t.innerHTML = '" + title + "';document.head.appendChild(t);history.replaceState({},'" + title + "','" + fakeUrl + "');})();<\/script>";
 			w.document.write("<img src='"+d+"' alt='"+username+"' title='"+username+"'/>");
+			w.document.write(script);
 		}
 	</script>
 </body>
